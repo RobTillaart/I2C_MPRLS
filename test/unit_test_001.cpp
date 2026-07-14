@@ -77,7 +77,7 @@ unittest(test_constants)
 
 unittest(test_read_zero)
 {
-  I2C_MPPLS sensor(0x58);
+  I2C_MPRLS sensor(0x58);
 
   Wire.begin();
   assertTrue(sensor.begin());
