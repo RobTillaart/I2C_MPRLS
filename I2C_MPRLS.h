@@ -186,7 +186,7 @@ public:
   uint32_t lastRead()   { return _lastRead; };
 
   //  get the last state
-  uint8_t  getState() { return _state; };
+  int  getState() { return _state; };
 
   //  ERROR
   int getLastError()
@@ -218,7 +218,7 @@ protected:
   float    _pressure;
   int      _rpc;  //  raw counter for debugging.
 
-  uint8_t  _state;
+  int      _state;
   int      _error;
   uint16_t _errorCount;
   uint32_t _lastRead;
