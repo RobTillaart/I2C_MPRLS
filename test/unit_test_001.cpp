@@ -80,7 +80,7 @@ unittest(test_read_zero)
   I2C_MPRLS sensor(0x58);
 
   Wire.begin();
-  assertTrue(sensor.begin());
+  assertTrue(sensor.begin(25));
   assertTrue(sensor.isConnected());  //  incorrect, keep build happy
 
   fprintf(stderr, "Test default pressure\n");
