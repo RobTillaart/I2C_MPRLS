@@ -22,7 +22,7 @@ void setup()
   Serial.println();
 
   Wire.begin();
-  if (sensor.begin(16, 0) == false)
+  if (sensor.begin(0, 16) == false)
   {
     Serial.print("Cannot find sensor:\t");
     Serial.print(sensor.getAddress());

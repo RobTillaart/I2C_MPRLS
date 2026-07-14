@@ -60,8 +60,7 @@ unittest(test_constructor)
   fprintf(stderr, "test state\n");
   assertEqual(0, sensor.errorCount());
   assertEqual(0, sensor.lastRead());
-
-  assertEqual(I2C_MPRLS_CONNECT_ERROR, sensor.getLastError());
+  assertEqual(I2C_MPRLS_OK, sensor.getLastError());
 }
 
 

@@ -45,11 +45,14 @@ public:
     reset();
     _address     = address;
     _wire        = wire;
-    _error       = I2C_MPRLS_INIT;
-    _state       = I2C_MPRLS_NONE;
   };
 
-  bool begin(float maxPressure, float minPressure = 0)
+  bool begin(float maxPressure)
+  {
+    return begin(0, maxPressure);
+  }; 
+
+  bool begin(float minPressure, float maxPressure)
   {
     _minPressure = minPressure;
     _maxPressure = maxPressure;
@@ -69,7 +72,7 @@ public:
     _lastRead   = 0;
     _pressure   = 0;
     _error      = I2C_MPRLS_INIT;
-    _state      = 0x00;
+    _state      = I2C_MPRLS_NONE;
   };
 
   uint8_t getAddress()
@@ -203,10 +206,9 @@ public:
   };
 
   //  debugging / own conversion.
-  int      rawPressureCount()
-  {
-    return _rpc;
-  };
+  int   rawPressureCount() { return _rpc; };
+  float getMinPressure() { return _minPressure; };
+  float getMaxPressure() { return _maxPressure; };
 
 
 protected:

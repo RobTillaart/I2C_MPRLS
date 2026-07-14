@@ -22,7 +22,7 @@ void setup()
   Serial.println();
 
   Wire.begin();
-  sensor.begin(1.6, 0);
+  sensor.begin(0, 1.6);
 
   Serial.println("Pres");
 }

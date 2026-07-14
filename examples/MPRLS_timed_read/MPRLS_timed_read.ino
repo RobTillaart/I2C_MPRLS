@@ -26,7 +26,7 @@ void setup()
   Wire.begin();
   sensor.begin(6.4);
 
-  if (sensor.begin(16, 0) == false)
+  if (sensor.begin(0, 16) == false)
   {
     Serial.print("Cannot find sensor:\t");
     Serial.print(sensor.getAddress());

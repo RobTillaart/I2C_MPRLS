@@ -150,9 +150,10 @@ too if they are behind the multiplexer.
 
 - **I2C_MPRLS(uint8_t address, TwoWire \*wire = &Wire)** Constructor,
 I2C address and optional the wire interface can be defined.
-- **bool begin(float maxPressure, float minPressure = 0)** initializes internals.
-As all sensors have a range starting at zero the minPressure is default 0.
-However it might be set to non zero to adjust.
+- **bool begin(float maxPressure)** initializes range as 0..maxPressure.
+- **bool begin(float minPressure, float maxPressure)** initializes range.
+Note: all sensors have a range starting at zero, however one might 
+set minPressure to be non zero to adjust the range.
 The pressure is in arbitrary units, can be PSI, mBar, KPa etc.
 The function **getPressure()** returns the same units. 
 Returns true if address can be found  on I2C bus.
@@ -232,7 +233,8 @@ Internal counter wraps after 65535.
 Raw counter API, for debugging or your own conversion.
 
 - **int rawPressureCount()** idem.
-
+- **float getMinPressure()** idem.
+- **float getMaxPressure()** idem.
 
 ## Testing
 
