@@ -2,7 +2,7 @@
 [![Arduino CI](https://github.com/RobTillaart/I2C_MPRLS/workflows/Arduino%20CI/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
 [![Arduino-lint](https://github.com/RobTillaart/I2C_MPRLS/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/RobTillaart/I2C_MPRLS/actions/workflows/arduino-lint.yml)
 [![JSON check](https://github.com/RobTillaart/I2C_MPRLS/actions/workflows/jsoncheck.yml/badge.svg)](https://github.com/RobTillaart/I2C_MPRLS/actions/workflows/jsoncheck.yml)
-[![GitHub issues](https://img.shields.io/github/issues/RobTillaart/MPRLS.svg)](https://github.com/RobTillaart/I2C_MPRLS/issues)
+[![GitHub issues](https://img.shields.io/github/issues/RobTillaart/I2C_MPRLS.svg)](https://github.com/RobTillaart/I2C_MPRLS/issues)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/I2C_MPRLS/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/RobTillaart/MPRLS.svg?maxAge=3600)](https://github.com/RobTillaart/I2C_MPRLS/releases)
