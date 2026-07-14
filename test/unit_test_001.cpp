@@ -51,7 +51,7 @@ unittest(test_constructor)
 {
   I2C_MPRLS sensor(0x58);
 
-  assertEqual(I2C_MPRLS_INIT, sensor.getState());
+  assertEqual(I2C_MPRLS_INIT, sensor.getLastError());
 
   Wire.begin();
   assertTrue(sensor.begin(16, 0));
@@ -61,8 +61,7 @@ unittest(test_constructor)
   assertEqual(0, sensor.errorCount());
   assertEqual(0, sensor.lastRead());
 
-  fprintf(stderr, "%d\n", sensor.getState());
-  assertEqual(I2C_MPRLS_CONNECT_ERROR, sensor.getState());
+  assertEqual(I2C_MPRLS_CONNECT_ERROR, sensor.getLastError());
 }
 
 
