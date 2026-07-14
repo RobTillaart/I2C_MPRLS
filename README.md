@@ -113,16 +113,12 @@ The sensor supports up to 400 kHz.
 Datasheet figure 2.
 The address is hard coded in the sensor, so order the right type.
 
-|  HEX  |  DEC  |
-|:-----:|:-----:|
-| 0x08  |    8  |
-| 0x18  |   24  |
-| 0x28  |   40  |
-| 0x38  |   56  |
-| 0x48  |   72  |
-| 0x58  |   88  |
-| 0x68  |  104  |
-| 0x78  |  120  |
+|  HEX  |  DEC  |   |  HEX  |  DEC  |
+|:-----:|:-----:|:-:|:-----:|:-----:|
+| 0x08  |    8  |   | 0x48  |   72  |
+| 0x18  |   24  |   | 0x58  |   88  |
+| 0x28  |   40  |   | 0x68  |  104  |
+| 0x38  |   56  |   | 0x78  |  120  |
 
 
 ### I2C multiplexing
