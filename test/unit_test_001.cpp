@@ -49,12 +49,12 @@ unittest_teardown()
 
 unittest(test_constructor)
 {
-  MPRLS sensor(0x58, 100);
+  I2C_MPRLS sensor(0x58);
 
   assertEqual(I2C_MPRLS_INIT, sensor.state());
 
   Wire.begin();
-  assertTrue(sensor.begin());
+  assertTrue(sensor.begin(16, 0));
   assertTrue(sensor.isConnected());    //  incorrect, keep build happy
 
   fprintf(stderr, "test state\n");
@@ -67,17 +67,17 @@ unittest(test_constructor)
 unittest(test_constants)
 {
   fprintf(stderr, "Test state constants\n");
-  assertEqual(1,  I2C_ASDX_OK);
-  assertEqual(0,  I2C_ASDX_INIT);
-  assertEqual(-1, I2C_ASDX_READ_ERROR);
-  assertEqual(-2, I2C_ASDX_C000_ERROR);
-  assertEqual(-3, I2C_ASDX_CONNECT_ERROR);
+  assertEqual(1,  I2C_MPRLS_OK);
+  assertEqual(0,  I2C_MPRLS_INIT);
+  assertEqual(-1, I2C_MPRLS_READ_ERROR);
+  assertEqual(-2, I2C_MPRLS_WRITE_ERROR);
+  assertEqual(-3, I2C_MPRLS_CONNECT_ERROR);
 }
 
 
 unittest(test_read_zero)
 {
-  I2C_ASDX sensor(0x58, 100);
+  I2C_MPPLS sensor(0x58);
 
   Wire.begin();
   assertTrue(sensor.begin());

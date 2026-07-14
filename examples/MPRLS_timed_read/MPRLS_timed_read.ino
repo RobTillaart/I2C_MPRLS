@@ -8,8 +8,8 @@
 #include "I2C_MPRLS.h"
 
 
-//  adjust to type of sensor (address, psi)
-I2C_MPRLS sensor(0x58, 100);
+//  adjust address of sensor if needed
+I2C_MPRLS sensor(0x58);
 
 const uint32_t interval = 1000;
 

@@ -8,8 +8,8 @@
 #include "I2C_MPRLS.h"
 
 
-//  adjust to type of sensor (address, psi)
-I2C_MPRLS sensor(0x58, 100);
+//  adjust address of sensor if needed
+I2C_MPRLS sensor(0x58);
 
 uint32_t start, stop;
 volatile float pressure = 0;
@@ -25,7 +25,7 @@ void setup()
   Serial.println();
 
   Wire.begin();
-  if (sensor.begin(25) == false)
+  if (sensor.begin(25) == false)  //  implicit minPressure of 0
   {
     Serial.print("Cannot find sensor:\t");
     Serial.print(sensor.getAddress());

@@ -8,8 +8,8 @@
 #include "I2C_MPRLS.h"
 
 
-//  adjust to type of sensor (address, psi)
-I2C_MPRLS sensor(0x58, 100);
+//  adjust address of sensor if needed
+I2C_MPRLS sensor(0x58);
 
 
 void setup()
@@ -22,7 +22,7 @@ void setup()
   Serial.println();
 
   Wire.begin();
-  sensor.begin(16, 0);
+  sensor.begin(16);  //  implicit minPressure of 0
   //  optimistic no error check
 }
 

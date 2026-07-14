@@ -137,18 +137,18 @@ public:
     {
       case 'C':  //  20% - 80%
         //  reference: (can be optimized)
-        _pressure = (_rpc - 3355444) * (_maxPressure  - minPressure) /  10066330.0;
+        _pressure = (_rpc - 3355444) * (_maxPressure - _minPressure) /  10066330.0;
         if (_minPressure != 0) _pressure += _minPressure;
         break;
       case 'B':  //  2.5% - 22.5%
         //  reference: (can be optimized)
-        _pressure = (_rpc - 419430) * (_maxPressure  - minPressure) /  3355444.0;
+        _pressure = (_rpc - 419430) * (_maxPressure - _minPressure) /  3355444.0;
         if (_minPressure != 0) _pressure += _minPressure;
         break;
       case 'A':  //  10% - 90%
       default:
          //  reference: (can be optimized)
-        _pressure = (_rpc - 1677722) * (_maxPressure  - minPressure) /  13421772.0;
+        _pressure = (_rpc - 1677722) * (_maxPressure - _minPressure) /  13421772.0;
         if (_minPressure != 0) _pressure += _minPressure;
         break;
     }
