@@ -26,9 +26,11 @@ const int I2C_MPRLS_INIT          =  0;
 const int I2C_MPRLS_READ_ERROR    = -1;
 const int I2C_MPRLS_WRITE_ERROR   = -2;
 const int I2C_MPRLS_CONNECT_ERROR = -3;
+//  const int I2C_MPRLS_STATE_ERROR   = -99;  //  TODO
 
 
 //  STATUS BIT MASKS
+const uint8_t I2C_MPRLS_NONE    = 0x00;
 const uint8_t I2C_MPRLS_POWER   = 0x40;
 const uint8_t I2C_MPRLS_BUSY    = 0x20;
 const uint8_t I2C_MPRLS_MEMTEST = 0x04;
@@ -44,7 +46,7 @@ public:
     _address     = address;
     _wire        = wire;
     _error       = I2C_MPRLS_INIT;
-    _state       = 0x00;
+    _state       = I2C_MPRLS_NONE;
   };
 
   bool begin(float maxPressure, float minPressure = 0)
@@ -93,12 +95,22 @@ public:
     return _transferFunction;
   };
 
+
   //  ASYNC API TODO
+  //  int request()
+  //  bool conversionReady() - read status field only
+  //  bool endOfConversion() - use EOC pin
+  //  readData() - status + pressure field 
+
 
 
   //  BLOCKING API
   int read()
   {
+    //  new read() invalidates last state.
+    _state = I2C_MPRLS_NONE;
+
+    //  REQUEST CONVERSION
     _wire->beginTransmission(_address);
     _wire->write(0xAA);
     _wire->write(0x00);
@@ -109,8 +121,14 @@ public:
       _error = I2C_MPRLS_WRITE_ERROR;
       return _error;
     }
-    //  hard coded delay
+
+
+    //  CONVERSION READY
+    //  hard coded delay 5 milliseconds (see datasheet)
+    //  EOC (end of conversion) pin check is a future option.
     delay(5);
+
+
     //  read status + raw data
     _wire->requestFrom(_address, (uint8_t)4);
     if (_wire->available() != 4)
@@ -122,6 +140,10 @@ public:
 
     //  READ STATUS
     _state = _wire->read();
+    //  TODO check state here
+    //  - add error code
+    //  - set pressure to something
+    
     //  PROCESS PRESSURE
     _rpc = _wire->read();
     _rpc <<= 8;
@@ -164,7 +186,7 @@ public:
   uint32_t lastRead()   { return _lastRead; };
 
   //  get the last state
-  uint8_t  state()      { return _state; };
+  uint8_t  getState() { return _state; };
 
   //  ERROR
   int getLastError()

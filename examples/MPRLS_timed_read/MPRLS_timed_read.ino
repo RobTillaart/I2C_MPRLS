@@ -31,7 +31,7 @@ void setup()
     Serial.print("Cannot find sensor:\t");
     Serial.print(sensor.getAddress());
     Serial.print(" - state: ");
-    Serial.println(sensor.state());
+    Serial.println(sensor.getState());
     Serial.println("Check wires or try another address.");
     while(1);
   }
