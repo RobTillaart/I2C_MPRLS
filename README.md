@@ -298,12 +298,6 @@ Your feedback is welcome.
 
 #### Should
 
-- async API
-  - int request();
-  - bool isReady();
-  - int readAsync();
-- elaborate sensor type section.
-
 #### Could
 
 - improve performance of pressure math.

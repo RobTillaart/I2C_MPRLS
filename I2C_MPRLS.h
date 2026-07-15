@@ -45,12 +45,12 @@ public:
     reset();
     _address     = address;
     _wire        = wire;
-  };
+  }
 
   bool begin(float maxPressure)
   {
     return begin(0, maxPressure);
-  };
+  }
 
   bool begin(float minPressure, float maxPressure)
   {
@@ -64,7 +64,7 @@ public:
     }
     _error = I2C_MPRLS_OK;
     return true;
-  };
+  }
 
   void reset()
   {
@@ -73,30 +73,30 @@ public:
     _pressure   = 0;
     _error      = I2C_MPRLS_INIT;
     _state      = I2C_MPRLS_NONE;
-  };
+  }
 
   uint8_t getAddress()
   {
     return _address;
-  };
+  }
 
   bool isConnected()
   {
     _wire->beginTransmission(_address);
     return (_wire->endTransmission() == 0);
-  };
+  }
 
 
   //  TRANSFER FUNCTION
   void setTransferFunction(char tff)
   {
     _transferFunction = tff;
-  };
+  }
 
   char getTransferFunction()
   {
     return _transferFunction;
-  };
+  }
 
 
   //  ASYNC API == work in progress
@@ -116,7 +116,7 @@ public:
     }
     _error = I2C_MPRLS_OK;
     return _error;
-  };
+  }
 
 
   //  check status field
@@ -134,7 +134,7 @@ public:
     _state = _wire->read();
     //  need to check power flag too?
     return (_state & I2C_MPRLS_BUSY) > 0;
-  };
+  }
 
 
   //  use EOC pin (not supported yet)
@@ -215,7 +215,7 @@ public:
 
     getData();
     return _error;
-  };
+  }
 
 
   //  returns same value with each call until read() is called.
@@ -236,10 +236,7 @@ public:
   };
 
   //  # errors since last reset
-  uint16_t errorCount()
-  {
-    return _errorCount;
-  };
+  uint16_t errorCount() { return _errorCount; };
 
   //  debugging / own conversion.
   int   rawPressureCount() { return _rpc; };
