@@ -78,13 +78,13 @@ void test(uint32_t speed)
     pressure = sensor.getPressure();
   }
   stop = millis();
-  Serial.print("I2C speed :  ");
+  Serial.print("I2C speed : ");
   Serial.println(speed);
-  Serial.print("1000 x    :  ");
+  Serial.print("1000 x    : ");
   Serial.println(stop - start);
-  Serial.print("E-Count   :  ");
+  Serial.print("E-Count   : ");
   Serial.println(sensor.errorCount());
-  Serial.print(" Pressure :  ");
+  Serial.print(" Pressure : ");
   Serial.println(pressure);
 }
 
