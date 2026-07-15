@@ -2,11 +2,11 @@
 //
 //    FILE: I2C_MPRLS.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 //    DATE: 2025-09-03
 // PURPOSE: Arduino library for MPRLS pressure sensors. (Honeywell).
 //     URL: https://github.com/RobTillaart/MPRLS
-//          https://github.com/RobTillaart/pressure   (conversions)
+//          https://github.com/RobTillaart/pressure (conversions)
 //
 //  I2C only
 
@@ -14,7 +14,7 @@
 #include "Arduino.h"
 #include "Wire.h"
 
-#define I2C_MPRLS_LIB_VERSION              (F("0.1.0"))
+#define I2C_MPRLS_LIB_VERSION              (F("0.1.1"))
 
 
 //  ADDRESS = 0x30  fixed?
@@ -145,7 +145,7 @@ public:
     _state = _wire->read();
     //  TODO check state here
     //  - add error code
-    //  - set pressure to something
+    //  - set pressure to something (?)
     
     //  PROCESS PRESSURE
     _rpc = _wire->read();

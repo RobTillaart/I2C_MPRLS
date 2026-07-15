@@ -5,8 +5,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/RobTillaart/I2C_MPRLS.svg)](https://github.com/RobTillaart/I2C_MPRLS/issues)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/I2C_MPRLS/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/RobTillaart/MPRLS.svg?maxAge=3600)](https://github.com/RobTillaart/I2C_MPRLS/releases)
-[![PlatformIO Registry](https://badges.registry.platformio.org/packages/robtillaart/library/MPRLS.svg)](https://registry.platformio.org/libraries/robtillaart/MPRLS)
+[![GitHub release](https://img.shields.io/github/release/RobTillaart/I2C_MPRLS.svg?maxAge=3600)](https://github.com/RobTillaart/I2C_MPRLS/releases)
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/robtillaart/library/I2C_MPRLS.svg)](https://registry.platformio.org/libraries/robtillaart/I2C_MPRLS)
 
 
 # I2C_MPRLS
