@@ -16,11 +16,12 @@ Arduino library for MPRLS pressure sensors. (Honeywell).
 
 ## Description
 
-The MPRLS sensor of Honeywell exists in many variations.
+The MPRLS sensor of Honeywell exists in many variations and ranges.
+In the "sensor type" section below these variations are explained a bit.
 Check the datasheet of your type for all the details.
 
 The I2C_MPRLS library can read the sensor over I2C and returns the pressure 
-in the same unit as used in the **begin(maxPresseure, minPressure)** function. 
+in the same unit as used in the **begin()** function. 
 There is no conversion.
 Typical units to use are Bar, mBar, KPa or PSI, depending on the sensor used,
 (see datasheet figure 2).
@@ -31,6 +32,9 @@ The MPRLS sensor comes with different transfer functions.
 The pressure is measured in 24 bit but only a part of the full range is used.
 This can be 20-80%, 10-90% or 2.5-22.5%, depending on the transfer function.
 Default transfer function is A but the library allows to set B or C.
+
+The MPR series are relative low pressure sensors, for higher pressure 
+ranges you might check e.g. the Honeywell ABP series.
 
 Feedback, as always, is welcome.
 
@@ -75,15 +79,29 @@ The connections for SPI in datasheet miss pull up resistors.
 
 Detailed information see Figure 2. Product Nomenclature
 
-The MPR sensor has a full product type like 
+The MPR sensor has a full product type string like 
 ```
+MPRLS0025PA00001A 
+split in fields:
+
 MPR  L  S  0025  P  A  0000   1  A
 ```
 
-The first character A means Absolute.
+|  part  |   description  |
+|:-------|:---------------|
+|  MPR   |  Series, Micro Pressure (R unknown)
+|  L     |  model: L = Long
+|  S     |  Silicone gel
+|  0025  |  max pressure = 25 units
+|  P     |  unit: P (Psi) or B(bar), M(mbar), K(kPa) ...
+|  A     |  A=Absolute, G=Gage
+|  0000  |  min pressure = 0 units
+|  1     |  IO: S=SPI, digit = I2C address => 0xN8 (e.g. 1 => 0x18)
+|  A     |  transfer function: A,B or C  
 
 The last character A is the transfer function to be used to
 calculate the pressure from the raw pressure count.
+The library supports A B and C and raw pressure count.
 
 
 ### Related
@@ -139,6 +157,20 @@ too if they are behind the multiplexer.
 - https://github.com/RobTillaart/TCA9548
 
 
+### I2C Performance
+
+TODO: run performance sketch with hardware.
+
+Only test **read()** as that is the main function.
+
+|  Clock     |  time (us)  |  Notes  |
+|:----------:|:-----------:|:--------|
+|   100 kHz  |             |  default 
+|   200 kHz  |             |
+|   300 kHz  |             |
+|   400 kHz  |             |  maximum datasheet
+
+
 ## Interface
 
 ```cpp
@@ -153,21 +185,22 @@ I2C address and optional the wire interface can be defined.
 - **bool begin(float maxPressure)** initializes range as 0..maxPressure.
 - **bool begin(float minPressure, float maxPressure)** initializes range.
 Note: all sensors have a range starting at zero, however one might 
-set minPressure to be non zero to adjust the range.
+set minPressure to be non zero to adjust (calibrate) the range.
 The pressure is in arbitrary units, can be PSI, mBar, KPa etc.
 The function **getPressure()** returns the same units. 
-Returns true if address can be found  on I2C bus.
+Returns true if the address can be found on the I2C bus.
 - **void reset()** resets internal variables, including pressure.
-- **bool isConnected()** tests if address can be found on I2C bus.
-- **uint8_t getAddress()** returns I2C address used.
-Mainly for debug message.
+- **bool isConnected()** tests if the address can be found on the I2C bus.
+- **uint8_t getAddress()** returns the I2C address configured in the 
+constructor. Mainly for debug message.
 
 
 ### Transfer function
 
-The MPR sensor comes with three different transfer functions,
-named A, B or C. The library defaults to A but allows the other
-transfer functions to be chosen.
+The MPR sensors come with three different transfer functions,
+named 'A', 'B' or 'C'. 
+This function defines how the raw counter is converted to pressure.
+The library defaults to 'A' but the other transfer functions to be set.
 
 - **void setTransferFunction(char tff)** idem.
 Parameter tff == 'A', 'B' or 'C'. Default = 'A'.
@@ -176,11 +209,11 @@ sensor type code.
 - **char getTransferFunction()** return set value or default 'A'.
 
 There is no validity check on the TFF parameter, to allow to add 
-additional transfer functions in the library.
-If TFF is not supported, the default 'A' is used.
+additional (proprietary) transfer functions in the library.
 This can be used to have other conversion of the raw pressure count
 (rpc) to pressure. Or one could just pass through the rpc.
-  
+If TFF is not supported, the default 'A' is used.
+
 
 ### Read, getPressure
 
@@ -203,21 +236,22 @@ First need the working be validated with hardware.
 ### State
 
 - **uint32_t lastRead()** time in milliseconds of last successful read of the sensor.
-- **int state()** last known state from **read()**, bit masks.
+- **int state()** last known state from **read()**, bit mask.
 
-|  state              |  value  |  meaning             |
-|:--------------------|:-------:|:---------------------|
-|  I2C_MPRLS_POWER    |  0x40   |  no error            |
-|  I2C_MPRLS_BUSY     |  0x20   |  begin() not called  |
-|  I2C_MPRLS_MEMTEST  |  0x04   |  I2C error           |
-|  I2C_MPRLS_MATH     |  0x01   |  I2C error           |
+|  state              |  bit mask  |  meaning             |
+|:--------------------|:----------:|:---------------------|
+|  I2C_MPRLS_POWER    |    0x40    |  1 = device powered  |
+|  I2C_MPRLS_BUSY     |    0x20    |  1 = device busy     |
+|  I2C_MPRLS_MEMTEST  |    0x04    |  1 = integrity fail  |
+|  I2C_MPRLS_MATH     |    0x01    |  1 = math saturation |
+|  other fields       |    0x00    |  always 0
 
 
 ### Error 
 
 - **uint16_t errorCount()** total counter for the number of errors occurred.
 Internal counter wraps after 65535.
-- **int getLastError()** returns last error and resets.
+- **int getLastError()** returns last error and resets error flag.
 
 |  error                    |  meaning             |
 |:--------------------------|:---------------------|
@@ -235,6 +269,7 @@ Raw counter API, for debugging or your own conversion.
 - **int rawPressureCount()** idem.
 - **float getMinPressure()** idem.
 - **float getMaxPressure()** idem.
+
 
 ## Testing
 
