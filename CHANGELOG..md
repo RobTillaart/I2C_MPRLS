@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - fix #2, URL in badges (readme.md)
 - fix state table (readme.md)
 - start with ASYNC API
+- add example MPRLS_minimal_async.ino
 - minor edits
 
 ## [0.1.0] - 2026-07-14

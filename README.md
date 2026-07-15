@@ -215,14 +215,25 @@ This can be used to have other conversion of the raw pressure count
 If TFF is not supported, the default 'A' is used.
 
 
+### Read ASYNC
+
+- **int request()** request new pressure conversion.
+Returns **I2C_MPRLS_OK** or an error code.
+- **bool conversionReady()** returns true if state byte indicates not busy.
+Can set an error code.
+- **int getData()** reads the status and pressure data, checks for errors,
+calculates the pressure and set the lastRead time stamp.
+Returns **I2C_MPRLS_OK** or an error code.
+
+
 ### Read, getPressure
 
 Before any call to **getPressure()** one need to call **read()** 
 unless one wants the last value read.
 
-- **int read()** actually reads the sensor, checks for errors,
+- **int read()** actually reads the status and pressure, checks for errors,
 calculates the pressure and set the lastRead time stamp.
-The read call blocks for at least 5 milliseconds.
+The read() call blocks for at least 5 milliseconds.
 Returns **I2C_MPRLS_OK** or an error code.
 - **int getPressure()** returns pressure in units as defined in **begin()**.
 Multiple calls give the same value until a new call to read() is made.

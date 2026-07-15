@@ -127,7 +127,7 @@ public:
     {
       _errorCount++;
       _error = I2C_MPRLS_READ_ERROR;
-      return _error;
+      return false;
     }
     //  READ STATUS
     _error = I2C_MPRLS_OK;
@@ -145,7 +145,7 @@ public:
 
 
   //  status + pressure field
-  int readData()
+  int getData()
   {
     _wire->requestFrom(_address, (uint8_t)4);
     if (_wire->available() != 4)
@@ -213,7 +213,7 @@ public:
     //  EOC (end of conversion) pin check is a future option.
     delay(5);
 
-    readData();
+    getData();
     return _error;
   };
 
