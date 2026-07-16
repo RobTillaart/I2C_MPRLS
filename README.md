@@ -124,8 +124,6 @@ Other:
 
 ## I2C
 
-The sensor supports up to 400 kHz.
-
 ### I2C address
 
 Datasheet figure 2.
@@ -158,6 +156,8 @@ too if they are behind the multiplexer.
 
 
 ### I2C Performance
+
+The sensor supports up to 400 kHz for I2C-bus (datasheet).
 
 TODO: run performance sketch with hardware.
 
@@ -247,7 +247,7 @@ First need the working be validated with hardware.
 ### State
 
 - **uint32_t lastRead()** time in milliseconds of last successful read of the sensor.
-- **int state()** last known state from **read()**, bit mask.
+- **uint8_t getState()** returns last known state fetched by **read()** or **getData()**.
 
 |  state              |  bit mask  |  meaning             |
 |:--------------------|:----------:|:---------------------|
@@ -293,16 +293,28 @@ Your feedback is welcome.
 
 #### Must
 
-- update documentation.
-- keep in sync with I2C_ASDX if possible.
+- update documentation
+- verify with hardware
+- keep in sync with I2C_ASDX if possible
 
 #### Should
 
 #### Could
 
-- improve performance of pressure math.
-  - first need verification they work.
+- improve performance of pressure math
+  - first need verification they work
+- add lastRequest timeStamp for more efficient async
+  - no need to poll state before e.g. 5 ms
+  - implement conversionReady() based upon millis() and lastRequest
+  - implement isBusy() upon state field.
+  - lastRequest > lastRead fails when wrapping occurs. 
+  - lastRequest ==> 0 after read?
 - add examples
+  - derived 
+- check datasheet if SPI bus is faster?
+- support EOC pin
+- support RES (reset) pin
+
 
 #### Wont
 

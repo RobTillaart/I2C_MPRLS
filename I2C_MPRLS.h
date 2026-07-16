@@ -219,13 +219,13 @@ public:
 
 
   //  returns same value with each call until read() is called.
-  float getPressure()  { return _pressure; };
+  float getPressure() { return _pressure; };
 
   //  timestamp of last good read
-  uint32_t lastRead()   { return _lastRead; };
+  uint32_t lastRead() { return _lastRead; };
 
   //  get the last state
-  int  getState() { return _state; };
+  uint8_t  getState() { return _state; };
 
   //  ERROR
   int getLastError()
@@ -253,7 +253,7 @@ protected:
   float    _pressure;
   int      _rpc;  //  raw counter for debugging.
 
-  int      _state;
+  uint8_t  _state;
   int      _error;
   uint16_t _errorCount;
   uint32_t _lastRead;
